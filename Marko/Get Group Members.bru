@@ -1,0 +1,10 @@
+meta {
+  name: Get Group Members
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/api/v1/groups/{{groupId}}/members
+  auth: bearer
+}

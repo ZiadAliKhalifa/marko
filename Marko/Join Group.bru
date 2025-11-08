@@ -1,0 +1,10 @@
+meta {
+  name: Join Group
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/v1/groups/{{groupId}}/join
+  auth: bearer
+}
