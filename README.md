@@ -11,26 +11,28 @@ A minimal backend service for a mobile app that lets users create groups, join g
 - **Health Monitoring**: Built-in health check endpoint
 - **Graceful Shutdown**: Proper server lifecycle management
 
-## 📁 Project Structure
+## 📁 Project Structure (Mono‑repo)
 
 ```
-country-arrival-notifier/
-├── cmd/
-│   └── server/
-│       └── main.go              # Main server entry point
-├── internal/
-│   ├── auth/                    # Authentication middleware
-│   ├── config/                  # Configuration management
-│   ├── db/                      # Database connection and models
-│   ├── groups/                  # Group CRUD operations
-│   ├── locations/               # Location update handling
-│   └── notifications/           # Notification service and handlers
-├── migrations/                  # Database migrations
-├── Dockerfile                   # Container configuration
-├── docker-compose.yml          # Local development setup
-├── go.mod                       # Go module dependencies
-├── go.sum                       # Dependency checksums
-└── .env.example                # Environment variables template
+marko/
+├── backend/                     # Backend (Go)
+│   ├── cmd/
+│   │   └── server/
+│   │       └── main.go          # Main server entry point
+│   ├── internal/
+│   │   ├── auth/                # Authentication middleware
+│   │   ├── config/              # Configuration management
+│   │   ├── db/                  # Database connection and models
+│   │   ├── groups/              # Group CRUD operations
+│   │   ├── locations/           # Location update handling
+│   │   └── notifications/       # Notification service and handlers
+│   ├── migrations/              # Database migrations
+│   ├── go.mod                   # Go module dependencies
+│   └── go.sum                   # Dependency checksums
+├── mobile/                      # Mobile app (Expo/React Native)
+├── Dockerfile                   # Builds backend from backend/
+├── docker-compose.yml           # Local dev services (e.g., Postgres)
+└── .env.example                 # Environment variables template
 ```
 
 ## 🛠️ Prerequisites
@@ -66,9 +68,10 @@ docker compose up -d postgres
 docker compose ps
 ```
 
-### 3. Install Dependencies
+### 3. Install Backend Dependencies
 
 ```bash
+cd backend
 go mod download
 ```
 
@@ -79,17 +82,17 @@ go mod download
 go install github.com/pressly/goose/v3/cmd/goose@latest
 
 # Run migrations
-goose -dir migrations postgres "postgres://user:password@localhost:5432/marko?sslmode=disable" up
+goose -dir backend/migrations postgres "postgres://user:password@localhost:5432/marko?sslmode=disable" up
 ```
 
-### 5. Start the Server
+### 5. Start the Backend Server
 
 ```bash
-# Run the server
-go run cmd/server/main.go
+# Run the server (from repo root)
+go run ./backend/cmd/server/main.go
 
-# Or build and run
-go build -o server cmd/server/main.go
+# Or build and run (from repo root)
+go build -o server ./backend/cmd/server/main.go
 ./server
 ```
 
