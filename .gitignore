@@ -42,3 +42,21 @@ Thumbs.db
 # Optional: ignore any local test artifacts
 coverage/
 .nyc_output/
+
+# Mobile (Expo / React Native)
+mobile/node_modules/
+mobile/.expo/
+mobile/.expo-shared/
+mobile/web-build/
+mobile/dist/
+mobile/.eas/
+
+# iOS native build outputs (if prebuilt)
+mobile/ios/Pods/
+mobile/ios/build/
+mobile/ios/DerivedData/
+
+# Android native build outputs (if prebuilt)
+mobile/android/.gradle/
+mobile/android/build/
+mobile/android/app/build/
